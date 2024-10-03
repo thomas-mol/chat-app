@@ -3,47 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     <link rel="stylesheet" href="min-reset.css" />
-    <link rel="stylesheet" href="style.css" />
-    <script type="module" src="./classes/message.js"></script>
-    <script type="module" src="script.js" defer></script>
-    <title>Ketch Up</title>
+    <link rel="stylesheet" href="login.css" />
+    <title>Log In</title>
   </head>
   <body>
-    <h2 id="app-title">Ketch Up 🍅</h2>
-    <div id="chat-room">
-      <!-- Display and change username -->
-      <div id="username-container">
-        <span><i class="fa fa-user"></i></span>
-        <input
-          type="text"
-          id="username"
-          value="anonymous"
-          maxlength="20"
-          disabled
-        />
-        <span id="edit-username">
-          <i class="fa fa-pencil"></i>
-        </span>
-      </div>
-      <!-- Sent and recieved messages show up here -->
-      <ul id="message-container"></ul>
-      <!-- Type & submit messages here -->
-      <form action="" id="form">
-        <div class="input-container">
-          <input id="message-input" type="text" /><button
-            id="send-button"
-            type="submit"
-          >
-            send <span><i class="fa fa-paper-plane"></i></span>
-          </button>
+    <div id="login-container">
+      <h2 id="app-title">🍅 Ketch-Up</h2>
+      <form id="login-form" action="chatroom.html">
+        <div class="form-control">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter username..."
+            required
+          />
+        </div>
+        <div class="form-control">
+          <label for="room">Chatroom</label>
+          <select name="room" id="room">
+            <option value="1">Room 1</option>
+            <option value="2">Room 2</option>
+            <option value="3">Room 3</option>
+            <option value="4">Room 4</option>
+            <option value="5">Room 5</option>
+          </select>
+        </div>
+        <div class="form-control">
+          <button type="submit" class="btn">Join Chat</button>
         </div>
       </form>
     </div>
-    <h3 id="active-users"></h3>
   </body>
 </html>
