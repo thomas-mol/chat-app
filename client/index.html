@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="min-reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="./classes/message.js"></script>
+    <script type="module" src="script.js" defer></script>
+    <title>Ketch Up</title>
+  </head>
+  <body>
+    <h2 id="app-title">Ketch Up 🍅</h2>
+    <div id="chat-room">
+      <!-- Display and change username -->
+      <div id="username-container">
+        <span><i class="fa fa-user"></i></span>
+        <input
+          type="text"
+          id="username"
+          value="anonymous"
+          maxlength="20"
+          disabled
+        />
+        <span id="edit-username">
+          <i class="fa fa-pencil"></i>
+        </span>
+      </div>
+      <!-- Sent and recieved messages show up here -->
+      <ul id="message-container"></ul>
+      <!-- Type & submit messages here -->
+      <form action="" id="form">
+        <div class="input-container">
+          <input id="message-input" type="text" /><button
+            id="send-button"
+            type="submit"
+          >
+            send <span><i class="fa fa-paper-plane"></i></span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <h3 id="active-users"></h3>
+  </body>
+</html>

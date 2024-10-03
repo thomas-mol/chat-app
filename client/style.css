@@ -1,0 +1,121 @@
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
+}
+
+#app-title {
+  padding: 0.25rem 0;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+#chat-room {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 90%;
+  max-width: 480px;
+  margin: 0 auto;
+  background-image: url("./assets/background.png");
+  background-size: contain;
+  border: 0.25rem solid lightgrey;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+#username-container {
+  display: flex;
+  background-color: #dcdcdc;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+
+  span {
+    color: #bbb;
+  }
+}
+
+#username {
+  padding: 0 0.5rem;
+  color: #7e7e7e;
+  background-color: #dcdcdc;
+  border: none;
+  outline: none;
+}
+
+#edit-username {
+  cursor: pointer;
+  margin-left: auto;
+}
+
+#message-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.5rem;
+  overflow-y: scroll;
+  padding: 1rem 0.5rem;
+}
+
+.message-left,
+.message-right {
+  max-width: 80%;
+  padding: 0.5rem 1rem;
+  word-wrap: break-word;
+
+  p > span {
+    display: block;
+    font-style: italic;
+    font-size: 0.75rem;
+    text-align: right;
+    padding-top: 0.25rem;
+  }
+}
+
+.message-left {
+  align-self: flex-start;
+  border-radius: 1rem 1rem 1rem 0;
+  background-color: whitesmoke;
+  box-shadow: -0.125rem 0.125rem 0.25rem #dcdcdc;
+}
+
+.message-right {
+  align-self: end;
+  border-radius: 1rem 1rem 0 1rem;
+  background-color: lawngreen;
+  box-shadow: 0.125rem 0.125rem 0.25rem #dcdcdc;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  width: 100%;
+  background-color: #dcdcdc;
+
+  .input-container {
+    display: flex;
+  }
+}
+
+#message-input {
+  flex-grow: 1;
+  height: 2rem;
+  padding: 0 0.75rem;
+}
+
+#send-button {
+  height: 2rem;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+#active-users {
+  font-size: 0.75rem;
+  text-align: center;
+  font-style: italic;
+}
