@@ -1,24 +1,20 @@
 const io = require("socket.io")(4000, {
   cors: {
-    origin: ["http://127.0.0.1:5500"],
+    origin: ["http://127.0.0.1:5500", "http://192.168.178.58:5500"],
   },
 });
 
-let connectedClients = new Set();
+let usersActive = new Set();
 
 io.on("connection", (socket) => {
   // Connecting to server
-  console.log("Socket connected:", socket.id);
-  console.log("Connected to rooms:");
-  socket.rooms.forEach((element) => {
-    console.log(`- ${element}`);
-  });
-
-  connectedClients.add(socket.id);
-  io.emit("clients-total", connectedClients.size);
+  console.log(
+    `Socket connected: ${socket.id} \n ====================================`
+  );
 
   // Joining a room -> add functionality
   socket.on("join-room", ({ username, room }) => {
+    console.log(username, room);
     // Make a user object {id,username,room}
     // socket.join(user.room)
     // send welcome message to user
@@ -37,8 +33,8 @@ io.on("connection", (socket) => {
 
   // Disconnecting from server
   socket.on("disconnect", () => {
-    console.log("Socket disconnected:", socket.id);
-    connectedClients.delete(socket.id);
-    io.emit("clients-total", connectedClients.size);
+    console.log(
+      `Socket disconnected: ${socket.id} \n ====================================`
+    );
   });
 });
