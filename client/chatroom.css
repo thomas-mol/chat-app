@@ -6,49 +6,36 @@ body {
   background-color: #f2f2f2;
 }
 
-#app-title {
-  padding: 0.25rem 0;
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-}
-
 #chat-room {
   display: flex;
   flex-direction: column;
   height: 80vh;
   width: 90%;
   max-width: 480px;
-  margin: 0 auto;
+  margin: auto;
   background-image: url("./assets/background.png");
   background-size: contain;
-  border: 0.25rem solid lightgrey;
+  border: 0.25rem solid rgba(17, 0, 252, 0.5);
   border-radius: 1rem;
+  box-shadow: 0.5rem 0.5rem 0.5rem #dcdcdc;
   overflow: hidden;
 }
 
 #username-container {
   display: flex;
-  background-color: #dcdcdc;
-  padding: 0.5rem;
-  font-size: 1.25rem;
+  gap: 1.25rem;
+  background-color: rgba(17, 0, 252, 0.5);
+  padding: 1.125rem 1.5rem;
+  font-size: 1.5rem;
 
-  span {
-    color: #bbb;
+  span,
+  p {
+    color: #f2f2f2;
   }
-}
 
-#username {
-  padding: 0 0.5rem;
-  color: #7e7e7e;
-  background-color: #dcdcdc;
-  border: none;
-  outline: none;
-}
-
-#edit-username {
-  cursor: pointer;
-  margin-left: auto;
+  #room {
+    margin-left: auto;
+  }
 }
 
 #message-container {
@@ -95,27 +82,32 @@ body {
   padding: 1rem;
   gap: 1rem;
   width: 100%;
-  background-color: #dcdcdc;
+  background-color: rgba(17, 0, 252, 0.5);
+}
 
-  .input-container {
-    display: flex;
-  }
+.input-container {
+  display: flex;
+  gap: 0.5rem;
 }
 
 #message-input {
   flex-grow: 1;
+  min-width: 12rem;
   height: 2rem;
   padding: 0 0.75rem;
 }
 
 #send-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   height: 2rem;
   padding: 0 1rem;
   cursor: pointer;
 }
 
 #active-users {
-  font-size: 0.75rem;
+  padding: 0 0 1rem;
   text-align: center;
   font-style: italic;
 }
