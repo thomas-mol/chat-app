@@ -2,30 +2,39 @@ import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import Message from "./classes/message.js";
 
 // Constants
+const serverAddress = "http://192.168.178.20:4000";
 
-const usernameInput = document.getElementById("username");
-const editUsername = document.getElementById("edit-username");
+const usernameTag = document.getElementById("username");
+const roomTag = document.getElementById("room");
+
 const messageInput = document.getElementById("message-input");
 const messageContainer = document.getElementById("message-container");
+
 const form = document.getElementById("form");
+
 const activeUsers = document.getElementById("active-users");
-
-//    'Private' variables
-
-let _senderId = "";
-let _username = document.getElementById("username").value;
 
 // Socket IO
 
-const socket = io("http://localhost:4000");
+const socket = io(serverAddress);
+
+let _senderId = "";
 
 socket.on("connect", () => {
   console.log(`You're connected with id: ${socket.id}`);
   _senderId = socket.id;
 });
 
+// Get username and room from the search params
+let username = new URLSearchParams(window.location.search).get("username");
+let room = new URLSearchParams(window.location.search).get("room");
+
+usernameTag.innerText = username;
+roomTag.innerText = room;
+
+socket.emit("join-room", { username, room });
+
 socket.on("clients-total", (totalClients) => {
-  console.log(`Clients connected: ${totalClients}`);
   activeUsers.innerText = `Active users: ${totalClients}`;
 });
 
@@ -50,25 +59,11 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   if (messageInput.value != "") {
-    const message = new Message(_username, _senderId, messageInput.value);
+    const message = new Message(username, _senderId, messageInput.value);
     displayMessage(message);
     socket.emit("send-message", message);
     messageInput.value = "";
   }
-});
-
-editUsername.addEventListener("click", () => {
-  usernameInput.disabled = false;
-  usernameInput.focus();
-
-  usernameInput.addEventListener(
-    "blur",
-    () => {
-      _username = usernameInput.value;
-      usernameInput.disabled = true;
-    },
-    { once: true }
-  );
 });
 
 // Functions
