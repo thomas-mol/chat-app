@@ -12,7 +12,7 @@ const messageContainer = document.getElementById("message-container");
 
 const form = document.getElementById("form");
 
-const activeUsers = document.getElementById("active-users");
+const activeUsers = document.getElementById("user-list");
 
 // Socket IO
 
@@ -23,19 +23,23 @@ let _senderId = "";
 socket.on("connect", () => {
   console.log(`You're connected with id: ${socket.id}`);
   _senderId = socket.id;
+
+  // Get username and room from the search params
+  let username = new URLSearchParams(window.location.search).get("username");
+  let room = new URLSearchParams(window.location.search).get("room");
+
+  usernameTag.innerText = username;
+  roomTag.innerText = room;
 });
-
-// Get username and room from the search params
-let username = new URLSearchParams(window.location.search).get("username");
-let room = new URLSearchParams(window.location.search).get("room");
-
-usernameTag.innerText = username;
-roomTag.innerText = room;
 
 socket.emit("join-room", { username, room });
 
-socket.on("clients-total", (totalClients) => {
-  activeUsers.innerText = `Active users: ${totalClients}`;
+socket.on("user-list", (list) => {
+  list.forEach((name) => {
+    let nameNode = document.createElement("li");
+    nameNode.textContent = name;
+    activeUsers.appendChild(nameNode);
+  });
 });
 
 socket.on("recieve-message", (message) => {
