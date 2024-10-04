@@ -1,4 +1,7 @@
-const io = require("socket.io")(4000, {
+import { Server } from "socket.io";
+import User from "../shared/classes/user";
+
+const io = new Server(4000, {
   cors: {
     origin: ["http://127.0.0.1:5500", "http://192.168.178.58:5500"],
   },
@@ -7,34 +10,47 @@ const io = require("socket.io")(4000, {
 let usersActive = new Set();
 
 io.on("connection", (socket) => {
-  // Connecting to server
-  console.log(
-    `Socket connected: ${socket.id} \n ====================================`
-  );
 
-  // Joining a room -> add functionality
+  console.log("Socket connected:", socket.id);
+
   socket.on("join-room", ({ username, room }) => {
-    console.log(username, room);
-    // Make a user object {id,username,room}
-    // socket.join(user.room)
-    // send welcome message to user
-    // broadcast connect message to room user joined
-    // send user and room info
+    let user = new User(socket.id, username, room); // make a user object
+
+    socket.join(user.room); // add socket to room
+
+    connectedClients.add(user); // add user to set of users
+
+    // socket.emit("welcome-message", {}); // send welcome message to user
+
+    // socket.to(user.room).broadcast.emit("join-message", {}); // broadcast connect message to room user joined
+
+    sendListUsernames(user.room); // send user and room info
   });
 
-  // Listen for messages
   socket.on("send-message", (message) => {
     console.log(message);
-    socket.broadcast.emit("recieve-message", message);
-
-    // send message to the room the user is currently in
-    // io.to(user.room).emit()
+    socket.to(user.room).broadcast.emit("recieve-message", message);
   });
 
-  // Disconnecting from server
   socket.on("disconnect", () => {
-    console.log(
-      `Socket disconnected: ${socket.id} \n ====================================`
-    );
+    console.log("Socket disconnected:", socket.id);
+
+    connectedClients.forEach((user) => {
+      if (user.id === socket.id) {
+        connectedClients.delete(user);
+      }
+    });
+
+    connectedClients.forEach((user) => {
+      sendListUsernames(user.room);
+    });
   });
+
+  function sendListUsernames(room) {
+    const usernames = Array.from(connectedClients)
+      .filter((user) => user.room === room)
+      .map((user) => user.username);
+
+    io.to(room).emit("user-list", usernames);
+  }
 });
