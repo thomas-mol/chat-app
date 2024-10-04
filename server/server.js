@@ -3,13 +3,14 @@ import User from "../shared/classes/user";
 
 const io = new Server(4000, {
   cors: {
-    origin: ["http://127.0.0.1:5500"],
+    origin: ["http://127.0.0.1:5500", "http://192.168.178.58:5500"],
   },
 });
 
-let connectedClients = new Set();
+let usersActive = new Set();
 
 io.on("connection", (socket) => {
+
   console.log("Socket connected:", socket.id);
 
   socket.on("join-room", ({ username, room }) => {
