@@ -22,7 +22,7 @@ body {
 }
 
 #active-users {
-  height: 80vh;
+  height: 40vh;
   margin: auto 0;
   padding: 1rem;
   background-color: rgba(17, 0, 252, 0.5);
@@ -69,6 +69,11 @@ body {
   gap: 0.5rem;
   overflow-y: scroll;
   padding: 1rem 0.5rem;
+}
+
+.message-notification {
+  text-align: center;
+  font-style: italic;
 }
 
 .message-left,
@@ -128,4 +133,12 @@ body {
   height: 2rem;
   padding: 0 1rem;
   cursor: pointer;
+}
+
+#exit-btn {
+  padding: 1rem;
+  i {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 }

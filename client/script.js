@@ -1,8 +1,8 @@
 import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
-import Message from "./classes/message.js";
+import Message from "../shared/classes/message.js";
 
 // Constants
-const serverAddress = "http://192.168.178.20:4000";
+const serverAddress = ["http://192.168.178.20:4000", "http://localhost:4000"];
 
 const usernameTag = document.getElementById("username");
 const roomTag = document.getElementById("room");
@@ -16,7 +16,7 @@ const activeUsers = document.getElementById("user-list");
 
 // Socket IO
 
-const socket = io(serverAddress);
+const socket = io(serverAddress[1]);
 
 let _senderId = "";
 
@@ -30,11 +30,15 @@ socket.on("connect", () => {
 
   usernameTag.innerText = username;
   roomTag.innerText = room;
+
+  socket.emit("join-room", { username, room });
 });
 
-socket.emit("join-room", { username, room });
-
 socket.on("user-list", (list) => {
+  while (activeUsers.firstChild) {
+    activeUsers.removeChild(activeUsers.firstChild);
+  }
+
   list.forEach((name) => {
     let nameNode = document.createElement("li");
     nameNode.textContent = name;
@@ -42,8 +46,27 @@ socket.on("user-list", (list) => {
   });
 });
 
+socket.on("welcome-message", (message) => {
+  const messageContent = document.createElement("p");
+  messageContent.innerText = message.content;
+
+  const messageWrapper = document.createElement("li");
+  messageWrapper.classList.add("message-notification");
+  messageWrapper.appendChild(messageContent);
+  messageContainer.appendChild(messageWrapper);
+});
+
+socket.on("server-message", (message) => {
+  const messageContent = document.createElement("p");
+  messageContent.innerText = message.content;
+
+  const messageWrapper = document.createElement("li");
+  messageWrapper.classList.add("message-notification");
+  messageWrapper.appendChild(messageContent);
+  messageContainer.appendChild(messageWrapper);
+});
+
 socket.on("recieve-message", (message) => {
-  // Convert the recieved JSON back into Message Object
   const recievedMessage = new Message(
     message.username,
     message.senderId,
@@ -54,7 +77,7 @@ socket.on("recieve-message", (message) => {
 });
 
 socket.on("disconnect", () => {
-  console.error("Disconnected from server");
+  console.warn("Disconnected from server");
 });
 
 // Event Listeners
@@ -79,9 +102,10 @@ function displayMessage(message) {
 function createMessageElement(message) {
   // Create <span> with the timestamp
   const messageTimestamp = document.createElement("span");
-  messageTimestamp.textContent = `${
-    message.username
-  } · ${message.getTimestamp()}`;
+  messageTimestamp.textContent =
+    message.senderId == _senderId
+      ? `${message.getTimestamp()}`
+      : `${message.username} · ${message.getTimestamp()}`;
 
   // Create <p> with the message content
   const messageContent = document.createElement("p");
