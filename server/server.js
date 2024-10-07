@@ -17,6 +17,7 @@ io.on("connection", (socket) => {
 
   socket.on("join-room", ({ username, room }) => {
     const user = new User(socket.id, username, room); // make a user object
+
     console.log(user);
 
     socket.join(user.room); // add socket to room
@@ -76,8 +77,6 @@ io.on("connection", (socket) => {
     const usernames = Array.from(usersActive)
       .filter((user) => user.room === room)
       .map((user) => user.username);
-
-    console.log(usernames);
 
     io.to(room).emit("user-list", usernames);
   }

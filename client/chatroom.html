@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="chatroom.css" />
     <script type="module" src="./classes/message.js"></script>
     <script type="module" src="script.js" defer></script>
-    <title>Ketch Up</title>
+    <title>Ketch Up v1</title>
   </head>
   <body>
     <div id="active-users">
@@ -24,7 +24,11 @@
       <div id="username-container">
         <span><i class="fa fa-user"></i></span>
         <p id="username">Anonymous</p>
-        <p id="room"></p>
+        <div id="exit-btn">
+          <a href="./index.html">
+            <i class="fa fa-close"></i>
+          </a>
+        </div>
       </div>
       <ul id="message-container">
         <!-- Messages -->
@@ -39,11 +43,6 @@
           </button>
         </div>
       </form>
-    </div>
-    <div id="exit-btn">
-      <a href="./index.html">
-        <i class="fa fa-close"></i>
-      </a>
     </div>
   </body>
 </html>
