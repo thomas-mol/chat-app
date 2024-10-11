@@ -6,6 +6,7 @@ services:
       - "4000:4000"
     volumes:
       - ./server:/usr/src/app
+      - ./shared:/usr/src/app/shared
     depends_on:
       - client
 
@@ -15,3 +16,4 @@ services:
       - "8080:80"
     volumes:
       - ./client:/usr/share/nginx/html
+      - ./shared:/usr/share/nginx/html/shared
