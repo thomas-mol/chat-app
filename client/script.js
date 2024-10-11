@@ -2,7 +2,7 @@ import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import Message from "../shared/classes/message.js";
 
 // Constants
-const serverAddress = ["http://192.168.178.20:3000", "http://localhost:3000"];
+const serverAddress = ["http://192.168.178.20:4000", "http://localhost:4000"];
 
 const usernameTag = document.getElementById("username");
 

@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
-import Message from "../shared/classes/message.js";
-import User from "../shared/classes/user.js";
+import Message from "./shared/classes/message.js";
+import User from "./shared/classes/user.js";
 
 const io = new Server(4000, {
   cors: {
