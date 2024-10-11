@@ -5,9 +5,9 @@ import User from "../shared/classes/user.js";
 const io = new Server(4000, {
   cors: {
     origin: [
-      "http://127.0.0.1:5500",
-      "http://localhost:5500",
-      "http://192.168.178.58:5500",
+      "http://127.0.0.1:8080",
+      "http://localhost:8080",
+      "http://192.168.178.58:8080",
     ],
   },
 });
@@ -45,23 +45,6 @@ io.on("connection", (socket) => {
       ); // broadcast connect message to room user joined
 
     sendListUsernames(user.room); // send user and room info
-  });
-
-  socket.on("is-typing", (senderId) => {
-    let user = findUser(senderId);
-    user.isTyping = true;
-
-    socket
-      .to(user.room)
-      .emit(
-        "server-message",
-        new Message(serverName, serverId, `${user.username} is typing...`)
-      );
-  });
-
-  socket.on("stop-typing", (senderId) => {
-    let user = findUser(senderId);
-    user.isTyping = false;
   });
 
   socket.on("send-message", (_message) => {

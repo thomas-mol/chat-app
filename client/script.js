@@ -2,7 +2,7 @@ import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import Message from "../shared/classes/message.js";
 
 // Constants
-const serverAddress = ["http://192.168.178.20:4000", "http://localhost:4000"];
+const serverAddress = ["http://192.168.178.20:3000", "http://localhost:3000"];
 
 const usernameTag = document.getElementById("username");
 
@@ -20,7 +20,6 @@ const socket = io(serverAddress[1]);
 socket.on("connect", () => {
   console.log(`You're connected with id: ${socket.id}`);
 
-  // Get username and room from the search params
   let username = new URLSearchParams(window.location.search).get("username");
   let room = new URLSearchParams(window.location.search).get("room");
 
@@ -51,15 +50,7 @@ socket.on("welcome-message", (message) => {
   messageContainer.appendChild(messageWrapper);
 });
 
-const serverMessages = new Set();
-
 socket.on("server-message", (message) => {
-  if (serverMessages.has(message.content)) {
-    return;
-  }
-
-  serverMessages.add(message.content);
-
   const messageContent = document.createElement("p");
   messageContent.innerText = message.content;
 
@@ -67,11 +58,6 @@ socket.on("server-message", (message) => {
   messageWrapper.classList.add("message-notification");
   messageWrapper.appendChild(messageContent);
   messageContainer.appendChild(messageWrapper);
-
-  setTimeout(() => {
-    messageWrapper.remove();
-    serverMessages.delete(message.content);
-  }, 5000);
 });
 
 socket.on("recieve-message", (message) => {
@@ -99,19 +85,6 @@ form.addEventListener("submit", (event) => {
     socket.emit("send-message", message);
     messageInput.value = "";
   }
-});
-
-let typingTimeout;
-messageInput.addEventListener("keypress", (e) => {
-  if (typingTimeout) {
-    clearTimeout(typingTimeout);
-  }
-
-  socket.emit("is-typing", socket.id);
-
-  typingTimeout = setTimeout(() => {
-    socket.emit("stop-typing", socket.id);
-  }, 500); // 500 ms delay before sending 'stop-typing' event to server
 });
 
 // Functions
