@@ -36,4 +36,4 @@ cd server
 npm start
 ```
 
-The server will be running on http://localhost:3000
+The server will be running on http://localhost:4000
