@@ -26,14 +26,13 @@ cd chat-app
 ### 2. Install dependencies
 
 ```bash
-cd client && npm install && cd ../server && npm install
+cd client; npm install; cd ../server; npm install
 ```
 
 ### 3. Running the server
 
 ```bash
-cd server
 npm start
 ```
 
-The server will be running on http://localhost:4000
+The server will be running on http://localhost:4000 ( You can change the address in client/script.js OR in the docker-compose file. )

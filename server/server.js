@@ -1,13 +1,14 @@
 import { Server } from "socket.io";
-import Message from "./shared/classes/message.js";
-import User from "./shared/classes/user.js";
+import Message from "../shared/classes/message.js";
+import User from "../shared/classes/user.js";
 
 const io = new Server(4000, {
   cors: {
     origin: [
       "http://127.0.0.1:8080",
+      "http://127.0.0.1:5500",
       "http://localhost:8080",
-      "http://192.168.178.58:8080",
+      "http://localhost:5500",
     ],
   },
 });

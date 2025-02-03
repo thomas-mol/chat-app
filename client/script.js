@@ -2,7 +2,7 @@ import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import Message from "../shared/classes/message.js";
 
 // Constants
-const serverAddress = ["http://192.168.178.20:4000", "http://localhost:4000"];
+const serverAddress = ["http://localhost:4000"]; // * CHANGE SERVER ADDRESS HERE
 
 const usernameTag = document.getElementById("username");
 
@@ -15,7 +15,7 @@ const activeUsers = document.getElementById("user-list");
 
 // Socket IO
 
-const socket = io(serverAddress[1]);
+const socket = io(serverAddress[0]);
 
 socket.on("connect", () => {
   console.log(`You're connected with id: ${socket.id}`);
